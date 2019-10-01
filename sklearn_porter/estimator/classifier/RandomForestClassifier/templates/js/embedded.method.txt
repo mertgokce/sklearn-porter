@@ -2,7 +2,11 @@
 this.{method_name} = function(features) {{
     var classes = new Array({n_classes}).fill(0);
     for (var i = 0; i < trees.length; i++) {{
-        classes[trees[i](features)]++;
+        classes[trees[i](features).index]++;
     }}
-    return findMax(classes);
+    prediction = findMax(classes);
+    return { 
+	 probability: prediction.probability,
+	 classifier: prediction.index
+	};
 }}

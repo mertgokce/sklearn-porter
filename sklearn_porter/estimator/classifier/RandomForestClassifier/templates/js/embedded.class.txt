@@ -1,12 +1,15 @@
 var {class_name} = function() {{
 
-    var findMax = function(nums) {{
+    var findMax = function(nums) {
         var index = 0;
-        for (var i = 0; i < nums.length; i++) {{
+		let sum = 0;
+        for (var i = 0; i < nums.length; i++) {
             index = nums[i] > nums[index] ? i : index;
-        }}
-        return index;
-    }};
+			sum += nums[i];
+        }
+		let probability = nums[index] / sum;
+		return { index, probability };
+    };
 
     var trees = new Array();
 
@@ -14,15 +17,10 @@ var {class_name} = function() {{
 
 }};
 
-if (typeof process !== 'undefined' && typeof process.argv !== 'undefined') {{
-    if (process.argv.length - 2 == {n_features}) {{
-
-        // Features:
-        var features = process.argv.slice(2);
-
+module.exports = {
+    predict: (features) => { 
         // Prediction:
-        var prediction = new {class_name}().{method_name}(features);
-        console.log(prediction);
-
-    }}
-}}
+        var prediction = new RandomForestClassifier().predict(features);
+        return prediction.classifier === 1 ? prediction.probability : (1 - prediction.probability);
+    }
+}
